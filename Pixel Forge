@@ -1,0 +1,72 @@
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = playerGui
+
+local leftPanel = Instance.new("Frame")
+leftPanel.Size = UDim2.new(0.2, 0, 0.9, 0)
+leftPanel.Position = UDim2.new(0.01, 0, 0.05, 0)
+leftPanel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+leftPanel.Parent = screenGui
+
+local rightPanel = Instance.new("Frame")
+rightPanel.Size = UDim2.new(0.77, 0, 0.9, 0)
+rightPanel.Position = UDim2.new(0.22, 0, 0.05, 0)
+rightPanel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+rightPanel.Parent = screenGui
+
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(0.3, 0, 0.1, 0)
+titleLabel.Position = UDim2.new(0, 0, 0, 0)
+titleLabel.BackgroundTransparency = 1
+titleLabel.Text = "Test hub"
+titleLabel.TextColor3 = Color3.fromRGB(180, 180, 180)
+titleLabel.TextScaled = true
+titleLabel.Parent = rightPanel
+
+local closeButton = Instance.new("TextButton")
+closeButton.Size = UDim2.new(0.05, 0, 0.1, 0)
+closeButton.Position = UDim2.new(0.95, 0, 0, 0)
+closeButton.Text = "X"
+closeButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeButton.Parent = rightPanel
+
+local minimizeButton = Instance.new("TextButton")
+minimizeButton.Size = UDim2.new(0.05, 0, 0.1, 0)
+minimizeButton.Position = UDim2.new(0.9, 0, 0, 0)
+minimizeButton.Text = "-"
+minimizeButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+minimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+minimizeButton.Parent = rightPanel
+
+local usernameFrame = Instance.new("Frame")
+usernameFrame.Size = UDim2.new(0.4, 0, 0.1, 0)
+usernameFrame.Position = UDim2.new(0, 0, 0.9, 0)
+usernameFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+usernameFrame.Parent = rightPanel
+
+local profileImage = Instance.new("ImageLabel")
+profileImage.Size = UDim2.new(0.2, 0, 1, 0)
+profileImage.Position = UDim2.new(0, 0, 0, 0)
+profileImage.BackgroundTransparency = 1
+profileImage.Parent = usernameFrame
+
+local usernameLabel = Instance.new("TextLabel")
+usernameLabel.Size = UDim2.new(0.8, 0, 1, 0)
+usernameLabel.Position = UDim2.new(0.2, 0, 0, 0)
+usernameLabel.BackgroundTransparency = 1
+usernameLabel.Text = player.Name
+usernameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+usernameLabel.TextScaled = true
+usernameLabel.Parent = usernameFrame
+
+local function setAvatarImage(userId, imageLabel)
+    local thumbType = Enum.ThumbnailType.HeadShot
+    local thumbSize = Enum.ThumbnailSize.Size420x420
+    local content, isReady = game.Players:GetUserThumbnailAsync(userId, thumbType, thumbSize)
+    imageLabel.Image = content
+end
+
+setAvatarImage(player.UserId, profileImage)
