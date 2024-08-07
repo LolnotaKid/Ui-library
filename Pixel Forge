@@ -42,8 +42,8 @@ minimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 minimizeButton.Parent = rightPanel
 
 local usernameFrame = Instance.new("Frame")
-usernameFrame.Size = UDim2.new(0.4, 0, 0.12, 0) -- Adjusted height to make it medium
-usernameFrame.Position = UDim2.new(0, 0, 0.88, 0) -- Adjusted position to keep it at the bottom
+usernameFrame.Size = UDim2.new(0.4, 0, 0.2, 0) -- Increased height
+usernameFrame.Position = UDim2.new(0, 0, 0.8, 0) -- Adjusted position
 usernameFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 usernameFrame.Parent = rightPanel
 
@@ -70,61 +70,3 @@ local function setAvatarImage(userId, imageLabel)
 end
 
 setAvatarImage(player.UserId, profileImage)
-
-local function makeDraggable(guiObject)
-    local dragging
-    local dragInput
-    local dragStart
-    local startPos
-
-    local function update(input)
-        local delta = input.Position - dragStart
-        guiObject.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-    end
-
-    guiObject.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            dragging = true
-            dragStart = input.Position
-            startPos = guiObject.Position
-
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
-                end
-            end)
-        end
-    end)
-
-    guiObject.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-            dragInput = input
-        end
-    end)
-
-    game:GetService("UserInputService").InputChanged:Connect(function(input)
-        if input == dragInput and dragging then
-            update(input)
-        end
-    end)
-end
-
-local toggleButton = Instance.new("ImageButton")
-toggleButton.Size = UDim2.new(0.1, 0, 0.1, 0)
-toggleButton.Position = UDim2.new(0.45, 0, 0.9, 0)
-toggleButton.BackgroundTransparency = 1
-toggleButton.Image = "rbxassetid://your_image_id" -- Set your icon image here
-toggleButton.Visible = false
-toggleButton.Parent = coreGui
-
-makeDraggable(toggleButton)
-
-closeButton.MouseButton1Click:Connect(function()
-    screenGui.Enabled = false
-    toggleButton.Visible = true
-end)
-
-toggleButton.MouseButton1Click:Connect(function()
-    screenGui.Enabled = true
-    toggleButton.Visible = false
-end)
